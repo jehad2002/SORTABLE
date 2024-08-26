@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Superhero Details</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background-color: #f0f4f8;
+            color: #333;
+        }
+        header {
+            background-color: #004d40;
+            color: #ffffff;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .details {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+        .details img {
+            max-width: 60px; /* Increase the size of the image */
+            width: 20%; /* Make the image responsive */
+            height: auto; /* Maintain aspect ratio */
+            border-radius: 50%; /* Make the image circular */
+            margin-bottom: 20px;
+        }
+        .details div {
+            text-align: center;
+        }
+        h1 {
+            font-size: 3em; /* Increase the font size for the header */
+            margin: 0 0 20px;
+        }
+        .details h2 {
+            font-size: 2em; /* Increase the font size for the hero name */
+            margin-top: 0;
+        }
+        .details p {
+            font-size: 1.2em; /* Increase font size for other details */
+            margin: 5px 0;
+        }
+        .back-button {
+            display: inline-block;
+            padding: 10px 20px;
+            margin: 20px 0;
+            background-color: #004d40;
+            color: #ffffff;
+            text-decoration: none;
+            border-radius: 4px;
+            font-size: 1em;
+        }
+        .back-button:hover {
+            background-color: #003d33;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Superhero Details</h1>
+    </header>
+    <div class="container">
+        <a href="index.html" class="back-button">Back to Home</a>
+        <div class="details">
+            <img id="heroImage" src="" alt="Hero Image">
+            <div>
+                <h2 id="heroName"></h2>
+                <p><strong>Full Name:</strong> <span id="heroFullName"></span></p>
+                <p><strong>Intelligence:</strong> <span id="heroIntelligence"></span></p>
+                <p><strong>Strength:</strong> <span id="heroStrength"></span></p>
+                <p><strong>Race:</strong> <span id="heroRace"></span></p>
+                <p><strong>Gender:</strong> <span id="heroGender"></span></p>
+                <p><strong>Height:</strong> <span id="heroHeight"></span></p>
+                <p><strong>Weight:</strong> <span id="heroWeight"></span></p>
+                <p><strong>Place of Birth:</strong> <span id="heroPlaceOfBirth"></span></p>
+                <p><strong>Alignment:</strong> <span id="heroAlignment"></span></p>
+            </div>
+        </div>
+    </div>
+    <script src="hero-details.js"></script>
+</body>
+</html>

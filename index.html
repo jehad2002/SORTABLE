@@ -1,44 +1,130 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Superheroes information</title>
-  <link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Superhero Data</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background-color: #f0f4f8;
+            color: #333;
+        }
+        header {
+            background-color: #004d40;
+            color: #ffffff;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        header h1 {
+            font-size: 3em;
+            margin: 0;
+            padding: 10px 20px;
+            border-radius: 8px;
+            text-shadow: 0 0 10px rgba(0, 255, 255, 0.8);
+        }
+        .controls {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+        input[type="text"], select {
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 1em;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px auto;
+            background-color: #ffffff;
+            border: 1px solid #ddd;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        th, td {
+            padding: 12px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+        th {
+            background-color: #004d40;
+            color: #ffffff;
+            cursor: pointer;
+        }
+        th.sort-asc::after {
+            content: ' ▲';
+        }
+        th.sort-desc::after {
+            content: ' ▼';
+        }
+        img {
+            max-width: 50px;
+            border-radius: 4px;
+        }
+        #pagination {
+            margin: 20px;
+            text-align: center;
+        }
+        #pagination button {
+            margin: 0 5px;
+            padding: 8px 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            background-color: #004d40;
+            color: #ffffff;
+            cursor: pointer;
+            font-size: 1em;
+        }
+        #pagination button:hover {
+            background-color: #003d33;
+        }
+    </style>
 </head>
 <body>
-  <div class="container">
-    <h1>Superheroes Database</h1>
-    <div class="controls">
-      <label for="pageSize">Page Size:</label>
-      <select id="pageSize">
-        <option value="10">10</option>
-        <option value="20" selected>20</option>
-        <option value="50">50</option>
-        <option value="100">100</option>
-        <option value="all">All</option>
-      </select>
-      <input type="text" id="searchInput" placeholder="Search by name...">
-    </div>
+    <header>
+        <h1>Superhero Data</h1>
+        <div class="controls">
+            <input type="text" id="searchInput" placeholder="Search by name">
+            <label for="pageSize">Page Size:</label>
+            <select id="pageSize">
+                <option value="10">10</option>
+                <option value="20" selected>20</option>
+                <option value="50">50</option>
+                <option value="100">100</option>
+                <option value="all">All</option>
+            </select>
+        </div>
+    </header>
     <table id="heroesTable">
-      <thead>
-        <tr>
-          <th data-sort="name">Name</th>
-          <th data-sort="fullName">Full Name</th>
-          <th data-sort="powerstats.intelligence">Intelligence</th>
-          <th data-sort="powerstats.strength">Strength</th>
-          <th data-sort="appearance.race">Race</th>
-          <th data-sort="appearance.gender">Gender</th>
-          <th data-sort="appearance.height">Height</th>
-          <th data-sort="appearance.weight">Weight</th>
-          <th data-sort="biography.placeOfBirth">Place of Birth</th>
-          <th data-sort="biography.alignment">Alignment</th>
-        </tr>
-      </thead>
-      <tbody id="heroesBody"></tbody>
+        <thead>
+            <tr>
+                <th data-sort="name">Name</th>
+                <th data-sort="fullName">Full Name</th>
+                <th data-sort="powerstats.intelligence">Intelligence</th>
+                <th data-sort="powerstats.strength">Strength</th>
+                <th data-sort="appearance.race">Race</th>
+                <th data-sort="appearance.gender">Gender</th>
+                <th data-sort="appearance.height[0]">Height</th>
+                <th data-sort="appearance.weight[0]">Weight</th>
+                <th data-sort="biography.placeOfBirth">Place of Birth</th>
+                <th data-sort="biography.alignment">Alignment</th>
+                <th>Icon</th>
+            </tr>
+        </thead>
+        <tbody id="heroesBody">
+            <td><a href="hero-details.html?name=${encodeURIComponent(hero.name)}">${hero.name}</a></td>
+            <!-- Table rows will be inserted here by JavaScript -->
+        </tbody>
     </table>
-    <div id="pagination"></div>
-  </div>
-  <script src="script.js"></script>
+    <div id="pagination">
+        <!-- Pagination controls will be inserted here by JavaScript -->
+    </div>
+    <script src="sortable.js"></script>
 </body>
 </html>
+index.html
+4 KB
