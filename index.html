@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Superheroes information</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Superheroes Database</h1>
+    <div class="controls">
+      <label for="pageSize">Page Size:</label>
+      <select id="pageSize">
+        <option value="10">10</option>
+        <option value="20" selected>20</option>
+        <option value="50">50</option>
+        <option value="100">100</option>
+        <option value="all">All</option>
+      </select>
+      <input type="text" id="searchInput" placeholder="Search by name...">
+    </div>
+    <table id="heroesTable">
+      <thead>
+        <tr>
+          <th data-sort="name">Name</th>
+          <th data-sort="fullName">Full Name</th>
+          <th data-sort="powerstats.intelligence">Intelligence</th>
+          <th data-sort="powerstats.strength">Strength</th>
+          <th data-sort="appearance.race">Race</th>
+          <th data-sort="appearance.gender">Gender</th>
+          <th data-sort="appearance.height">Height</th>
+          <th data-sort="appearance.weight">Weight</th>
+          <th data-sort="biography.placeOfBirth">Place of Birth</th>
+          <th data-sort="biography.alignment">Alignment</th>
+        </tr>
+      </thead>
+      <tbody id="heroesBody"></tbody>
+    </table>
+    <div id="pagination"></div>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
