@@ -1,107 +1,109 @@
-document.addEventListener('DOMContentLoaded', () => {
-  const pageSizeSelect = document.getElementById('pageSize');
-  const searchInput = document.getElementById('searchInput');
-  const tableBody = document.getElementById('heroesBody');
-  const paginationDiv = document.getElementById('pagination');
-  let heroesData = [];
-  let currentPage = 1;
-  let pageSize = parseInt(pageSizeSelect.value);
+document.addEventListener('DOMContentLoaded', () => { // اضافه مستمع عند تحميل المحتوي 
+    const pageSizeSelect = document.getElementById('pageSize');
+    const searchInput = document.getElementById('searchInput');
+    const tableBody = document.getElementById('heroesBody');
+    const paginationDiv = document.getElementById('pagination');
+    let heroesData = []; 
+    let currentPage = 1; //  هذا المتغير يتتبع الصفحة الحالية التي يتم عرضها. يبدأ من 1 لأن التصفح عبر الصفحات يبدأ عادة من الصفحة رقم 1.
+    let pageSize = parseInt(pageSizeSelect.value) || 20; // هذا يحدد عدد العناصر التي سيتم عرضها على كل صفحة.
 
-  // Fetch data from API
-  fetch('https://rawcdn.githack.com/akabab/superhero-api/0.2.0/api/all.json')
-      .then(response => response.json())
-      .then(data => {
-          heroesData = data;
-          renderTable();
-          renderPagination();
-      })
-      .catch(console.error);
 
-  // Render table based on current page and page size
-  function renderTable() {
-      const filteredData = heroesData.filter(hero =>
-          hero.name.toLowerCase().includes(searchInput.value.toLowerCase())
-      );
-      const sortedData = [...filteredData].sort((a, b) => {
-          const key = document.querySelector('#heroesTable th.sort-asc')?.getAttribute('data-sort') ||
-                      document.querySelector('#heroesTable th.sort-desc')?.getAttribute('data-sort');
-          if (!key) return 0;
+    //الكود التالي يقوم بجلب البيانات من اي بي ااااي ا
+    fetch('https://rawcdn.githack.com/akabab/superhero-api/0.2.0/api/all.json')
+        .then(response => response.json()) // يحلل الاستجابة من (جيسون) إلى  جافا سكريبت
+        .then(data => {
+            heroesData = data; // تعيين البيانات المسترجعة من الـ اي بي ااااي 
+            renderTable(); //  لعرض البيانات في جدول. بعد تحميل البيانات
+            renderPagination(); // لإنشاء عناصر التصفح، مما يسمح للمستخدمين بالانتقال بين صفحات البيانات.
+        })
+        .catch(console.error); // يساعد في اكتشاف الأخطاء أثناء التطوير والتشغيل
 
-          const valA = deepValue(a, key);
-          const valB = deepValue(b, key);
 
-          if (valA == null) return 1;
-          if (valB == null) return -1;
+    function renderTable() { //  هذه الدالة تُستخدم لعرض البيانات في الجدول بناءً على الصفحة الحالية وحجم الصفحة المحدد.
+        const filteredData = heroesData.filter(hero =>   //يقوم هذا السطر بتصفية بيانات الأبطال بناءً على النص الذي أدخله المستخدم في حقل البحث
+            hero.name.toLowerCase().includes(searchInput.value.toLowerCase())
+        );
 
-          return isNaN(valA) ? valA.toString().localeCompare(valB) : valA - valB;
-      });
+        const isAll = pageSize === 'all';
+        const paginatedData = isAll ? filteredData 
+            : filteredData.slice((currentPage - 1) * pageSize, currentPage * pageSize); //   بداية و نهاية الجدول 
+        tableBody.innerHTML = paginatedData.map(hero => ` 
+            <tr>
+                <td><img src="${hero.images.xs}" alt="${hero.name}" class="hero-icon"></td>
+                <td><a href="hero-details.html?name=${encodeURIComponent(hero.name)}">${hero.name}</a></td>
+                <td>${hero.biography.fullName}</td>
+                <td>${hero.powerstats.intelligence}</td>
+                <td>${hero.powerstats.strength}</td>
+                <td>${hero.appearance.race}</td>
+                <td>${hero.appearance.gender}</td>
+                <td>${hero.appearance.height[0]}</td>
+                <td>${hero.appearance.weight[0]}</td>
+                <td>${hero.biography.placeOfBirth}</td>
+                <td>${hero.biography.alignment}</td>
+            </tr>
+        `).join('');
+        // تحديث محتوي الجدول
+        if (isAll) {
+            paginationDiv.style.display = 'none'; // Hide pagination if 'All' is selected
+        } else {
+            paginationDiv.style.display = 'block'; // Show pagination otherwise
+        }
+    }
+  // رسم عناصر التحكم في الصفحات
+function renderPagination() {
+    // حساب إجمالي عدد العناصر بعد تصفية البحث
+    const totalItems = heroesData.filter(hero =>
+        hero.name.toLowerCase().includes(searchInput.value.toLowerCase())
+    ).length;
+    
+    // إذا كان حجم الصفحة 'all'، نتجنب رسم عناصر التحكم في الصفحات
+    if (pageSize === 'all') {
+        paginationDiv.innerHTML = '';
+        return;
+    }
+    
+    // حساب إجمالي عدد الصفحات
+    const totalPages = Math.ceil(totalItems / pageSize);
+    
+    // رسم أزرار الصفحات
+    paginationDiv.innerHTML = Array.from({ length: totalPages }, (_, i) => `
+        <button class="${i + 1 === currentPage ? 'active' : ''}">${i + 1}</button>
+    `).join('');
+    
+    // إضافة مستمعي الأحداث لكل زر
+    paginationDiv.querySelectorAll('button').forEach((button, i) => {
+        button.addEventListener('click', () => {
+            currentPage = i + 1;
+            renderTable(); // تحديث جدول العرض بناءً على الصفحة الحالية
+            updatePagination(); // تحديث حالة أزرار التنقل
+        });
+    });
+}
 
-      const paginatedData = sortedData.slice((currentPage - 1) * pageSize, currentPage * pageSize);
+// تحديث حالة أزرار التنقل بناءً على الصفحة الحالية
+function updatePagination() {
+    paginationDiv.querySelectorAll('button').forEach((button, i) => {
+        button.classList.toggle('active', i + 1 === currentPage);
+    });
+}
 
-      tableBody.innerHTML = paginatedData.map(hero => `
-          <tr>
-              <td><img src="${hero.images.xs}" alt="${hero.name}" class="hero-icon"></td>
-              <td><a href="hero-details.html?name=${encodeURIComponent(hero.name)}">${hero.name}</a></td>
-              <td>${hero.biography.fullName}</td>
-              <td>${hero.powerstats.intelligence}</td>
-              <td>${hero.powerstats.strength}</td>
-              <td>${hero.appearance.race}</td>
-              <td>${hero.appearance.gender}</td>
-              <td>${hero.appearance.height[0]}</td>
-              <td>${hero.appearance.weight[0]}</td>
-              <td>${hero.biography.placeOfBirth}</td>
-              <td>${hero.biography.alignment}</td>
-          </tr>
-      `).join('');
-  }
-
-  // Helper function to access nested properties dynamically
-  function deepValue(obj, path) {
-      return path.split('.').reduce((acc, part) => acc?.[part], obj);
-  }
-
-  // Render pagination controls
-  function renderPagination() {
-      const totalItems = heroesData.filter(hero =>
-          hero.name.toLowerCase().includes(searchInput.value.toLowerCase())
-      ).length;
-      const totalPages = Math.ceil(totalItems / pageSize);
-
-      paginationDiv.innerHTML = Array.from({ length: totalPages }, (_, i) => `
-          <button class="${i + 1 === currentPage ? 'active' : ''}">${i + 1}</button>
-      `).join('');
-
-      paginationDiv.querySelectorAll('button').forEach((button, i) => {
-          button.addEventListener('click', () => {
-              currentPage = i + 1;
-              renderTable();
-              updatePagination();
-          });
-      });
-  }
-
-  // Update pagination buttons state
-  function updatePagination() {
-      paginationDiv.querySelectorAll('button').forEach((button, i) => {
-          button.classList.toggle('active', i + 1 === currentPage);
-      });
-  }
-
-  // Event listeners
-  pageSizeSelect.addEventListener('change', () => {
-      pageSize = parseInt(pageSizeSelect.value);
-      currentPage = 1;
-      renderTable();
-      renderPagination();
-  });
-
-  searchInput.addEventListener('input', () => {
-      currentPage = 1;
-      renderTable();
-      renderPagination();
-  });
-
-  // Initial setup
-  renderTable();
-  renderPagination();
+// الاستماع لتغييرات حجم الصفحة
+pageSizeSelect.addEventListener('change', () => {
+    pageSize = pageSizeSelect.value; // تخزين حجم الصفحة كقيمة نصية
+    currentPage = 1; // إعادة تعيين الصفحة الحالية إلى 1
+    renderTable(); // تحديث جدول العرض
+    renderPagination(); // إعادة رسم عناصر التحكم في الصفحات
 });
+
+// الاستماع لتغييرات في إدخال البحث
+searchInput.addEventListener('input', () => {
+    currentPage = 1; // إعادة تعيين الصفحة الحالية إلى 1
+    renderTable(); // تحديث جدول العرض
+    renderPagination(); // إعادة رسم عناصر التحكم في الصفحات
+});
+
+// إعداد أولي
+renderTable(); // عرض الجدول الأولي
+renderPagination(); // عرض عناصر التحكم في الصفحات الأولية
+  });
+  

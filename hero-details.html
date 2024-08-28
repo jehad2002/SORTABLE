@@ -5,26 +5,42 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Superhero Details</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
+       html, body {
             margin: 0;
-            background-color: #f0f4f8;
-            color: #333;
+            padding: 0;
+            height: 100%; /* Ensure the body and html take up full height */
+        }
+        body {
+            font-family: 'Arial', sans-serif;
+            background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQi3wOPNiR5a2UVcr63mdu4PAxtdceA6vaVAA&s');
+            background-size: cover; /* Ensures the image covers the entire page */
+            background-position: center; /* Centers the image */
+            background-repeat: no-repeat; /* Prevents the image from repeating */
+            color: #ffffff; /* White text color for readability */
+            height: 100%; /* Ensure the body takes up full height */
+            overflow: hidden; /* Prevents scrollbars caused by background image */
         }
         header {
-            background-color: #004d40;
-            color: #ffffff;
+            background-color: #f40a0a; /* Bold red background */
+            color: #ffffff; /* White text color */
             padding: 20px;
             text-align: center;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); /* Darker shadow for depth */
+        }
+        header h1 {
+            font-size: 5em; /* Large font size */
+            margin: 0;
+            padding: 10px 20px;
+            border-radius: 8px;
+            text-shadow: 0 0 10px rgba(42, 8, 234, 0.8); /* White glow effect */
         }
         .container {
-            max-width: 800px;
+            max-width: 500px;
             margin: 20px auto;
             padding: 20px;
-            background-color: #ffffff;
+            background-color: #94b4d62d; /* Dark background for the container */
             border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
         }
         .details {
             display: flex;
@@ -33,39 +49,44 @@
             gap: 20px;
         }
         .details img {
-            max-width: 60px; /* Increase the size of the image */
+            max-width: 100px; /* Increase the size of the image */
             width: 20%; /* Make the image responsive */
             height: auto; /* Maintain aspect ratio */
-            border-radius: 50%; /* Make the image circular */
+            border-radius: 100%; /* Circular image */
+            border: 2px solid #f40a0a; /* Red border for Marvel theme */
             margin-bottom: 20px;
         }
         .details div {
             text-align: center;
         }
         h1 {
-            font-size: 3em; /* Increase the font size for the header */
+            font-size: 3em; /* Larger font size */
             margin: 0 0 20px;
         }
         .details h2 {
-            font-size: 2em; /* Increase the font size for the hero name */
+            font-size: 2.5em; /* Larger font size for hero name */
             margin-top: 0;
+            color: #f40a0a; /* Red color for the hero name */
         }
         .details p {
-            font-size: 1.2em; /* Increase font size for other details */
+            font-size: 1.2em; /* Larger font size for details */
             margin: 5px 0;
+        }
+        .details strong {
+            color: #f40a0a; /* Red color for labels */
         }
         .back-button {
             display: inline-block;
             padding: 10px 20px;
             margin: 20px 0;
-            background-color: #004d40;
-            color: #ffffff;
+            background-color: #0033cc; /* Deep blue background for button */
+            color: #ffffff; /* White text color */
             text-decoration: none;
             border-radius: 4px;
             font-size: 1em;
         }
         .back-button:hover {
-            background-color: #003d33;
+            background-color: #002299; /* Darker blue on hover */
         }
     </style>
 </head>

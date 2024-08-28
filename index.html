@@ -6,24 +6,24 @@
     <title>Superhero Data</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Arial', sans-serif;
             margin: 0;
-            background-color: #f0f4f8;
-            color: #333;
+            background-color: #f0f4f8; /* Light background for contrast */
+            color: #ff0000; /* Default text color to white */
         }
         header {
-            background-color: #004d40;
-            color: #ffffff;
+            background-color: #0033cc; /* Deep blue for Marvel theme */
+            color: #ffffff; /* White text for contrast */
             padding: 20px;
             text-align: center;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
         }
         header h1 {
-            font-size: 3em;
+            font-size: 7em;
             margin: 0;
             padding: 10px 20px;
             border-radius: 8px;
-            text-shadow: 0 0 10px rgba(0, 255, 255, 0.8);
+            text-shadow: 0 0 10px rgba(255, 0, 0, 0.8); /* Red glow for Marvel effect */
         }
         .controls {
             margin-top: 20px;
@@ -33,7 +33,7 @@
         }
         input[type="text"], select {
             padding: 8px;
-            border: 1px solid #ccc;
+            border: 1px solid #ddd;
             border-radius: 4px;
             font-size: 1em;
         }
@@ -41,7 +41,7 @@
             width: 100%;
             border-collapse: collapse;
             margin: 20px auto;
-            background-color: #ffffff;
+            background-color: #ffffff; /* White background for the table */
             border: 1px solid #ddd;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
@@ -51,8 +51,8 @@
             text-align: left;
         }
         th {
-            background-color: #004d40;
-            color: #ffffff;
+            background-color: #cc0000; /* Red background for table headers */
+            color: #ffffff; /* White text for table headers */
             cursor: pointer;
         }
         th.sort-asc::after {
@@ -72,15 +72,15 @@
         #pagination button {
             margin: 0 5px;
             padding: 8px 16px;
-            border: 1px solid #ccc;
+            border: 1px solid #ddd;
             border-radius: 4px;
-            background-color: #004d40;
-            color: #ffffff;
+            background-color: #0033cc; /* Blue background for buttons */
+            color: #ffffff; /* White text for buttons */
             cursor: pointer;
             font-size: 1em;
         }
         #pagination button:hover {
-            background-color: #003d33;
+            background-color: #002299; /* Darker blue on hover */
         }
     </style>
 </head>
@@ -116,7 +116,6 @@
             </tr>
         </thead>
         <tbody id="heroesBody">
-            <td><a href="hero-details.html?name=${encodeURIComponent(hero.name)}">${hero.name}</a></td>
             <!-- Table rows will be inserted here by JavaScript -->
         </tbody>
     </table>
@@ -126,5 +125,3 @@
     <script src="sortable.js"></script>
 </body>
 </html>
-index.html
-4 KB
